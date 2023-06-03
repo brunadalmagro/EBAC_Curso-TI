@@ -3,7 +3,7 @@
 #include <locale.h> // biblioteca de aloca√ß√µes de texto por regi√£o
 #include <string.h> // Biblioteca respons√°vel por cuidar das Strings
 
-int registro() // func„o registro
+int registro() // func√£o registro
 {
 	char arquivo[40];
 	char cpf[40];
@@ -18,7 +18,7 @@ int registro() // func„o registro
 
 	FILE *file; // criando arquivo
 	file = fopen(arquivo, "a");
-	fprintf(file, cpf); // f(file) printf - salva o valor da vari·vel
+	fprintf(file, cpf); // f(file) printf - salva o valor da vari√°vel
 	fclose(file);		// fecha o arquivo
 
 	file = fopen(arquivo, "a"); // A "AUTER" ATUALIZAR
@@ -73,12 +73,12 @@ int consulta()
 
 	if (file == NULL) // verifica se o arquivo existe
 	{
-		printf("O arquivo n„o foi encontrado.\n");
+		printf("O arquivo n√£o foi encontrado.\n");
 	}
 
-	while (fgets != NULL) // LÍ uma linha do arquivo atÈ o final
+	while (fgets != NULL) // L√™ uma linha do arquivo at√© o final
 	{
-		printf("\nEssas s„o as informaÁıes do usu·rio");
+		printf("\nEssas s√£o as informa√ß√µes do usu√°rio");
 		printf("%s", conteudo, cpf);
 		printf("\n\n");
 
@@ -93,9 +93,9 @@ void deleta()
 	char arquivo[40];
 	char linha[150];
 	char cpf[40];
-	int encontrado = 0; // vari·vel para indicar se o registro foi encontrado
+	int encontrado = 0; // vari√°vel para indicar se o registro foi encontrado
 
-	printf("Digite o CPF do registro a ser excluÌdo: ");
+	printf("Digite o CPF do registro a ser exclu√≠do: ");
 	scanf("%s", cpf);
 
 	system("cls"); // limpar a tela
@@ -104,7 +104,7 @@ void deleta()
 	file = fopen(arquivo, "r");
 	if (file == NULL)
 	{
-		printf("O arquivo n„o foi encontrado.\n");
+		printf("O arquivo n√£o foi encontrado.\n");
 		return;
 	}
 
@@ -112,8 +112,8 @@ void deleta()
 
 	{
 		remove(arquivo);			 // remove o arquivo original
-		rename("temp.txt", arquivo); // renomeia o arquivo tempor·rio para o nome original
-		printf("O registro foi excluÌdo com sucesso.\n");
+		rename("temp.txt", arquivo); // renomeia o arquivo tempor√°rio para o nome original
+		printf("O registro foi exclu√≠do com sucesso.\n");
 	}
 }
 
@@ -125,7 +125,7 @@ void sair()
 
 int main()
 {
-	int opcao = 0; // Definindo vari·veis
+	int opcao = 0; // Definindo vari√°veis
 	int laco = 1;
 
 	for (laco = 1; laco = 1;)
@@ -135,19 +135,19 @@ int main()
 
 		setlocale(LC_ALL, "Portuguese"); // Definindo linguagens
 
-		printf("### CartÛrio da EBAC ###\n\n"); // InÌcio do menu
-		printf("Escolha a opÁ„o desejada do menu:\n\n");
+		printf("### Cart√≥rio da EBAC ###\n\n"); // In√≠cio do menu
+		printf("Escolha a op√ß√£o desejada do menu:\n\n");
 		printf("\t1 - Registrar nomes\n");
 		printf("\t2 - Consultar nomes\n");
 		printf("\t3 - Deletar nomes\n");
 		printf("\t4 - Sair\n");
-		printf("OpÁ„o: "); // Fim do menu
+		printf("Op√ß√£o: "); // Fim do menu
 
-		scanf("%d", &opcao); // Armazenamento da escolha do usu·rio
+		scanf("%d", &opcao); // Armazenamento da escolha do usu√°rio
 
 		system("cls");
 
-		switch (opcao) //Chama as funıes desejadas
+		switch (opcao) //Chama as fun√µes desejadas
 		{
 		case 1:
 			printf("Voce escolheu registro de nome!\n");
@@ -156,13 +156,13 @@ int main()
 			break;
 
 		case 2:
-			printf("VocÍ escolheu consultar os nomes!\n");
+			printf("Voc√™ escolheu consultar os nomes!\n");
 			consulta();
 			system("pause");
 			break;
 
 		case 3:
-			printf("VocÍ escolheu deletar nomes!\n");
+			printf("Voc√™ escolheu deletar nomes!\n");
 			deleta();
 			system("pause");
 			break;
@@ -172,10 +172,10 @@ int main()
 			break;
 
 		default:
-			printf("Essa opÁ„oo n„o est· disponÌvel.\n");
+			printf("Essa op√ß√£oo n√£o est√° dispon√≠vel.\n");
 			system("pause");
 			break;
 
-		} // Fim da seleÁ„o
+		} // Fim da sele√ß√£o
 	}
 }
