@@ -1,5 +1,3 @@
-# EBAC---Curso-T.I
-<sumary> Versão 1 back-end (esqueleto do projeto) </sumary>
 <!DOCTYPE html>
 <html>
 <head>
