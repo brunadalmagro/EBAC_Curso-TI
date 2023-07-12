@@ -1,181 +1,234 @@
-#include <stdio.h>	//biblioteca de comunica√ß√£o de usu√°rio
-#include <stdlib.h> // biblioteca alocar espa√ßos na mem√≥ria
-#include <locale.h> // biblioteca de aloca√ß√µes de texto por regi√£o
-#include <string.h> // Biblioteca respons√°vel por cuidar das Strings
+#include <stdio.h> // biblioteca de comunicaÁ„o do usu·rio
+#include <stdlib.h> // biblioteca para alocaÁ„o de memÛria
+#include <locale.h> // biblioteca para alocaÁ„o de texto por regi„o
+#include <string.h> // biblioteca respons·vel por manipular strings
+#include <ctype.h> // biblioteca respos·vel pela validaÁ„o de caracteres de entrada
 
-int registro() // func√£o registro
+void registro()
 {
-	char arquivo[40];
-	char cpf[40];
-	char nome[40];
-	char sobrenome[40];
-	char cargo[40];
+    char arquivo[40];
+    char cpf[40];
+    char nome[40];
+    char sobrenome[40];
+    char cargo[40];
 
-	printf("Digite o CPF a ser cadastrado: ");
-	scanf("%s", cpf);
+    printf("Digite o CPF a ser cadastrado (somente n˙meros): ");
+    scanf("%s", cpf);
 
-	strcpy(arquivo, "BD.txt"); // copia valor das strings
+    // ValidaÁ„o do CPF
+    for (int i = 0; cpf[i] != '\0'; i++)
+    {
+        if (!isdigit(cpf[i]))
+        {
+            printf("CPF inv·lido. Digite apenas n˙meros.\n");
+            getchar();
+            return;
+        }
+    }
 
-	FILE *file; // criando arquivo
-	file = fopen(arquivo, "a");
-	fprintf(file, cpf); // f(file) printf - salva o valor da vari√°vel
-	fclose(file);		// fecha o arquivo
+    strcpy(arquivo, "BD.txt");
 
-	file = fopen(arquivo, "a"); // A "AUTER" ATUALIZAR
-	fprintf(file, ",");
-	fclose(file);
+    FILE *file;
+    file = fopen(arquivo, "a");
+    fprintf(file, "%s", cpf);
+    fclose(file);
 
-	printf("Digite o nome que deseja cadastrar: ");
-	scanf("%s", nome);
+    file = fopen(arquivo, "a");
+    fprintf(file, ",");
+    fclose(file);
 
-	file = fopen(arquivo, "a");
-	fprintf(file, nome);
-	fclose(file);
+    printf("Digite o nome que deseja cadastrar: ");
+    scanf("%s", nome);
 
-	file = fopen(arquivo, "a");
-	fprintf(file, ",");
-	fclose(file);
+    file = fopen(arquivo, "a");
+    fprintf(file, "%s", nome);
+    fclose(file);
 
-	printf("Digite o sobrenome que deseja cadastrar: ");
-	scanf("%s", sobrenome);
+    file = fopen(arquivo, "a");
+    fprintf(file, ",");
+    fclose(file);
 
-	file = fopen(arquivo, "a");
-	fprintf(file, sobrenome);
-	fclose(file);
+    printf("Digite o sobrenome que deseja cadastrar: ");
+    scanf("%s", sobrenome);
 
-	file = fopen(arquivo, "a");
-	fprintf(file, ",");
-	fclose(file);
+    file = fopen(arquivo, "a");
+    fprintf(file, "%s", sobrenome);
+    fclose(file);
 
-	printf("Digite o cargo desejado: ");
-	scanf("%s", cargo);
+    file = fopen(arquivo, "a");
+    fprintf(file, ",");
+    fclose(file);
 
-	file = fopen(arquivo, "a");
-	fprintf(file, cargo);
-	fprintf(file, "\n");
-	fclose(file);
+    printf("Digite o cargo desejado: ");
+    scanf("%s", cargo);
 
-	system("pause");
+    file = fopen(arquivo, "a");
+    fprintf(file, "%s", cargo);
+    fprintf(file, "\n");
+    fclose(file);
+
+    printf("Pressione Enter para sair.");
+    getchar();
 }
 
-int consulta()
+
+void consulta()
 {
-	setlocale(LC_ALL, "Portuguese"); // Definindo linguagen
+    setlocale(LC_ALL, "Portuguese"); // Definindo idioma
 
-	char conteudo[50]; // armazena cada linha do arquivo
-	char cpf[40];	   // ponteiros para cada campo do registro
+    char cpf[40]; // CPF a ser consultado
+    int encontrado = 0; // Vari·vel para indicar se o usu·rio foi encontrado
 
-	printf("Digite o CPF completo para verificar: ");
-	scanf("%s", cpf);
+    printf("Digite o CPF ou nome completo para verificar: ");
+    scanf("%s", cpf);
 
-	FILE *file;
-	file = fopen("BD.txt", "r");
+    FILE *file;
+    file = fopen("BD.txt", "r");
 
-	if (file == NULL) // verifica se o arquivo existe
-	{
-		printf("O arquivo n√£o foi encontrado.\n");
-	}
+    if (file == NULL) // verifica se o arquivo existe
+    {
+        printf("O arquivo n„o foi encontrado.\n");
+        return;
+    }
 
-	while (fgets != NULL) // L√™ uma linha do arquivo at√© o final
-	{
-		printf("\nEssas s√£o as informa√ß√µes do usu√°rio");
-		printf("%s", conteudo, cpf);
-		printf("\n\n");
+    char linha[150];
+    while (fgets(linha, 150, file) != NULL)
+    {
+        if (strstr(linha, cpf) != NULL)
+        {
+            printf("\nEssas s„o as informaÁıes do usu·rio: %s\n\n", linha);
+            encontrado = 1;
+            break;
+        }
+    }
 
-		system("pause");
-	}
+    fclose(file);
+
+    if (!encontrado)
+    {
+        printf("Usu·rio n„o cadastrado.\n");
+    }
+
+    printf("Pressione Enter para sair.");
+    getchar();
 }
 
 void deleta()
 {
-	char nome[40];
-	char sobrenome[40];
-	char arquivo[40];
-	char linha[150];
-	char cpf[40];
-	int encontrado = 0; // vari√°vel para indicar se o registro foi encontrado
+    char arquivo[40];
+    char cpf[40];
+    int encontrado = 0; // vari·vel para indicar se o registro foi encontrado
 
-	printf("Digite o CPF do registro a ser exclu√≠do: ");
-	scanf("%s", cpf);
+    printf("Digite o CPF do registro a ser excluÌdo: ");
+    scanf("%s", cpf);
 
-	system("cls"); // limpar a tela
+    strcpy(arquivo, "BD.txt");
 
-	FILE *file;
-	file = fopen(arquivo, "r");
-	if (file == NULL)
-	{
-		printf("O arquivo n√£o foi encontrado.\n");
-		return;
-	}
+    FILE *file, *temp;
+    file = fopen(arquivo, "r");
+    temp = fopen("temp.txt", "w");
 
-	fclose(file);
+    if (file == NULL)
+    {
+        printf("O arquivo n„o foi encontrado.\n");
+        return;
+    }
 
-	{
-		remove(arquivo);			 // remove o arquivo original
-		rename("temp.txt", arquivo); // renomeia o arquivo tempor√°rio para o nome original
-		printf("O registro foi exclu√≠do com sucesso.\n");
-	}
+    char linha[150];
+    while (fgets(linha, 150, file) != NULL)
+    {
+        if (strstr(linha, cpf) == NULL)
+        {
+            fputs(linha, temp);
+        }
+        else
+        {
+            encontrado = 1;
+        }
+    }
+
+    fclose(file);
+    fclose(temp);
+
+    if (encontrado == 1)
+    {
+        remove(arquivo); // remove o arquivo original
+        rename("temp.txt", arquivo); // renomeia o arquivo tempor·rio para o nome original
+        printf("O registro foi excluÌdo com sucesso.\n");
+    }
+    else
+    {
+        remove("temp.txt"); // remove o arquivo tempor·rio
+        printf("A exclus„o foi cancelada pelo usu·rio.\n");
+    }
+
+    printf("Pressione Enter para sair.");
+    getchar();
 }
 
 void sair()
 {
-	printf("Saindo do sistema...\n");
-	exit(0); // Encerra o programa
+    printf("VocÍ escolheu Sair do sistema. \n");
+    exit(0);
 }
 
 int main()
 {
-	int opcao = 0; // Definindo vari√°veis
-	int laco = 1;
+    int opcao = 0; // Definindo vari·veis
+    int laco = 1;
 
-	for (laco = 1; laco = 1;)
-	{
+    for (laco = 1; laco == 1;)
+    {
+        system("cls");
 
-		system("cls");
+        setlocale(LC_ALL, "Portuguese"); // Definindo idioma
 
-		setlocale(LC_ALL, "Portuguese"); // Definindo linguagens
+        printf("### CartÛrio da EBAC ###\n\n"); // InÌcio do menu
+        printf("Escolha a opÁ„o desejada do menu:\n\n");
+        printf("\t1 - Registrar nomes\n");
+        printf("\t2 - Consultar nomes\n");
+        printf("\t3 - Deletar nomes\n");
+        printf("\t4 - Sair do sistema\n");
+        printf("OpÁ„o: "); // Fim do menu
 
-		printf("### Cart√≥rio da EBAC ###\n\n"); // In√≠cio do menu
-		printf("Escolha a op√ß√£o desejada do menu:\n\n");
-		printf("\t1 - Registrar nomes\n");
-		printf("\t2 - Consultar nomes\n");
-		printf("\t3 - Deletar nomes\n");
-		printf("\t4 - Sair\n");
-		printf("Op√ß√£o: "); // Fim do menu
+        scanf("%d", &opcao); // Armazenamento da escolha do usu·rio
 
-		scanf("%d", &opcao); // Armazenamento da escolha do usu√°rio
+        system("cls");
 
-		system("cls");
+        switch (opcao)
+        {
+        case 1:
+            printf("VocÍ escolheu registrar um nome!\n");
+            registro();
+            getchar();
+            break;
 
-		switch (opcao) //Chama as fun√µes desejadas
-		{
-		case 1:
-			printf("Voce escolheu registro de nome!\n");
-			registro();
-			system("pause");
-			break;
+        case 2:
+            printf("VocÍ escolheu consultar nomes!\n");
+            consulta();
+            getchar();
+            break;
 
-		case 2:
-			printf("Voc√™ escolheu consultar os nomes!\n");
-			consulta();
-			system("pause");
-			break;
+        case 3:
+            printf("VocÍ escolheu deletar nomes!\n");
+            deleta();
+            getchar();
+            break;
 
-		case 3:
-			printf("Voc√™ escolheu deletar nomes!\n");
-			deleta();
-			system("pause");
-			break;
+        case 4:
+            printf("Obrigad@, volte sempre!\n");
+            sair();
+            break;
 
-		case 4:
-			sair(); 
-			break;
+        default:
+            printf("Essa opÁ„o n„o est· disponÌvel.\n");
+            getchar();
+            break;
+        } // Fim da seleÁ„o
+    }
 
-		default:
-			printf("Essa op√ß√£oo n√£o est√° dispon√≠vel.\n");
-			system("pause");
-			break;
+    printf("Pressione Enter para sair.");
+    getchar();
+    return 0;
 
-		} // Fim da sele√ß√£o
-	}
 }
