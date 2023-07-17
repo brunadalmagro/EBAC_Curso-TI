@@ -3,6 +3,7 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
+#include <conio.h>
 
 typedef struct
 {
@@ -46,15 +47,33 @@ int login(Usuario *usuario)
     nome[strcspn(nome, "\n")] = '\0';
 
     printf("Senha: ");
-    fgets(senha, sizeof(senha), stdin);
-    senha[strcspn(senha, "\n")] = '\0';
+    int i = 0;
+    char ch;
+    while ((ch = getch()) != '\r')
+    {
+        if (ch == '\b')
+        {
+            if (i > 0)
+            {
+                printf("\b \b");
+                i--;
+            }
+        }
+        else
+        {
+            senha[i] = ch;
+            printf("*");
+            i++;
+        }
+    }
+    senha[i] = '\0';
 
     FILE *file;
     file = fopen("usuarios.txt", "r");
 
     if (file == NULL)
     {
-        printf("O arquivo não foi encontrado ou não pode ser aberto.\n");
+        printf("\nO arquivo não foi encontrado ou não pode ser aberto.\n");
         return 0;
     }
 
@@ -74,6 +93,7 @@ int login(Usuario *usuario)
     fclose(file);
     return 0; // Nome de usuário ou senha incorretos
 }
+
 
 void registro()
 {
