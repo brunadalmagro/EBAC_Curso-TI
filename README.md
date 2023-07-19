@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<h1>Programa de Gerenciamento de Nomes no Cartório da EBAC</h1>
+	<h1>Programa de Gerenciamento de Nomes no "cartório" da EBAC</h1>
 </head>
 <body>
 	<p>O programa de gerenciamento de nomes no Cartório da EBAC é uma aplicação simples desenvolvida para auxiliar na gestão dos registros de nomes dos clientes.</p>
